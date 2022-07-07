@@ -1,0 +1,33 @@
+name=name
+version=1.0
+link=https://example.com/$name/$name-$version.tar.xz
+dir=$name-$version
+
+pkgdownload () { 
+wget $link
+tar -xf $name-$version.tar.xz
+}
+
+pkgconfigure () {
+./configure
+}
+
+pkgmake () {
+make $1
+}
+
+pkgmakedoc () {
+make doc $1
+}
+
+pkgtests () {
+make check $1 
+}
+
+pkginstall () {
+make DESTDIR=/usr/gpkg/$name/$version install $1
+}
+
+pkginstalldoc () {
+}
+

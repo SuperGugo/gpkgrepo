@@ -1,0 +1,37 @@
+# pkginfo
+name=alsa-lib
+version=1.2.6.1
+link=https://www.alsa-project.org/files/pub/lib/$name-$version.tar.bz2
+dir=$name-$version
+
+pkgdownload () { 
+wget $link
+tar -xf $name-$version.tar.bz2
+}
+
+pkgconfigure () {
+./configure
+}
+
+pkgmake () {
+make $1
+}
+
+pkgmakedoc () {
+make doc $1
+}
+
+pkgtests () {
+make check $1 
+}
+
+pkginstall () {
+sudo make DESTDIR=/usr/gpkg/$name/$version install $1
+}
+
+pkginstalldoc () {
+sudo install -v -d -m755 /usr/share/doc/alsa-lib-1.2.6.1/html/search
+sudo install -v -m644 doc/doxygen/html/*.* /usr/share/doc/alsa-lib-1.2.6.1/html
+sudo install -v -m644 doc/doxygen/html/search/* /usr/share/doc/alsa-lib-1.2.6.1/html/search
+}
+
