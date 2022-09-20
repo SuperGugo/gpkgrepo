@@ -1,0 +1,35 @@
+# pkginfo
+name=alsa-firmware
+version=1.2.4
+link=https://www.alsa-project.org/files/pub/firmware/$name-$version.tar.bz2
+dir=$name-$version
+
+pkgdownload () { 
+wget $link
+tar -xf $name-$version.tar.bz2
+}
+
+pkgconfigure () {
+./configure --prefix=/usr
+}
+
+pkgmake () {
+make $1
+}
+
+pkgmakedoc () {
+printf "not needed"
+}
+
+pkgtests () {
+printf "this package does not come with a test suite"
+}
+
+pkginstall () {
+sudo make DESTDIR=/usr/gpkg/$name/$version install $1
+}
+
+pkginstalldoc () {
+printf "not needed"
+}
+

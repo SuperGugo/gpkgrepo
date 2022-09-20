@@ -1,0 +1,35 @@
+# pkginfo
+name=alsa-plugins
+version=1.2.7.1
+link=https://www.alsa-project.org/files/pub/plugins/$name-$version.tar.bz2
+dir=$name-$version
+
+pkgdownload () { 
+wget $link
+tar -xf $name-$version.tar.bz2
+}
+
+pkgconfigure () {
+./configure --sysconfdir=/etc
+}
+
+pkgmake () {
+make $1
+}
+
+pkgmakedoc () {
+printf "not needed"
+}
+
+pkgtests () {
+printf "this package does not come with a test suite"
+}
+
+pkginstall () {
+sudo make DESTDIR=/usr/gpkg/$name/$version install $1
+}
+
+pkginstalldoc () {
+printf "not needed"
+}
+

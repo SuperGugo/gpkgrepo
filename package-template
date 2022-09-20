@@ -29,5 +29,6 @@ make DESTDIR=/usr/gpkg/$name/$version install $1
 }
 
 pkginstalldoc () {
+printf "not needed"
 }
 

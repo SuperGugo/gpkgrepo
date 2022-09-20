@@ -1,0 +1,55 @@
+# pkginfo
+name=alsa-tools
+version=1.2.5
+link=https://www.alsa-project.org/files/pub/tools/$name-$version.tar.bz2
+dir=$name-$version
+
+pkgdownload () { 
+wget $link
+tar -xf $name-$version.tar.bz2
+}
+
+pkgconfigure () {
+rm -rf qlo10k1 Makefile gitcompile
+
+}
+
+pkgmake () {
+printf "not needed"
+}
+
+pkgmakedoc () {
+printf "not needed"
+}
+
+pkgtests () {
+printf "this package does not come with a test suite"
+}
+
+pkginstall () {
+for tool in *
+do
+  case $tool in
+    seq )
+      tool_dir=seq/sbiload
+    ;;
+    * )
+      tool_dir=$tool
+    ;;
+  esac
+
+  pushd $tool_dir
+    ./configure --prefix=/usr
+    make $1
+    sudo make DESTDIR=/usr/gpkg/$name/$version install $1
+    /sbin/ldconfig
+  popd
+
+done
+unset tool tool_dir
+}
+
+pkginstalldoc () {
+printf "not needed"
+}
+
